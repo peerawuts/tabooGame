@@ -184,7 +184,7 @@ export async function getScoresFromRedis(participantToken, players): Promise<voi
   return result;
 }
 
-export async function getParticipantTokenFromRedis(participantId: string): string {
+export async function getParticipantTokenFromRedis(participantId: string): Promise<void> {
   const endpointUrl = '/api/getParticipantToken';
   const pushBody = {
     participantId: participantId
@@ -202,7 +202,8 @@ export async function getParticipantTokenFromRedis(participantId: string): strin
       return result;
   } catch(err) {
     console.log(err);
-    return "";
+    const result = "";
+    return result;
   }
 }
 
