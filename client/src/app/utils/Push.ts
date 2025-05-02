@@ -254,8 +254,6 @@ export async function initPostMessageListener(setTabooWords, handleStartGameCoun
       var payload = JSON.parse(e.data);
       var message = e.data;
 
-      console.log("LocalPlayer:" + localPlayer);
-      //alert(util.inspect(payload.playedWords));
       console.log("Message '" + message + "' handled.");
       console.log("Start Game :" + payload.isStartGame);
       const isStartGame = payload.isStartGame == "true" ? true : false;
