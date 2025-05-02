@@ -247,6 +247,7 @@ export async function resetPlayerScores(roomId: string, players): Promise<void> 
   return result;
 }
 
+/*
 export async function initPostMessageListener(setTabooWords, handleStartGameCountdown, setIsGameEnd, setHitWords): Promise<void> {
     console.log("event listener message")
     navigator.serviceWorker.addEventListener('message', function(e) {
@@ -258,18 +259,19 @@ export async function initPostMessageListener(setTabooWords, handleStartGameCoun
       console.log("Start Game :" + payload.isStartGame);
       const isStartGame = payload.isStartGame == "true" ? true : false;
 
-      const members : any[] = new Array();
-      let data = { members: []  }
+      interface member { member: string };
+      const members : Array<member> = [];
+      let data = { members: [] as member[]  }
       for(let i in payload.playedWords) {
-
-        data.members.push( { member: payload.playedWords[i].member });
+        const temp = { member: payload.playedWords[i].member };
+        data.members.push(temp);
       }
       console.log(data);
       if(isStartGame) {
         console.log("Starting Game");
         setTabooWords(payload.playedWords);
         setIsGameEnd(false);
-        countdown(handleStartGameCountdown, isStartGame, data);
+        countdown(handleStartGameCountdown, isStartGame, data, 20000);
       }else{
         setHitWords(payload.hitWords);
         console.log(payload.hitWords);
@@ -286,6 +288,7 @@ export async function initPostMessageListener(setTabooWords, handleStartGameCoun
       }
     });
 }
+*/
 
 export async function countdown(handleStartGameCountdown, isStartGame, players, selectedGameDuration) {
     let timerInterval;
