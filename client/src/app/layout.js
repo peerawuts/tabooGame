@@ -1,9 +1,9 @@
 import "./globals.css"; // Import the global CSS file
 
 export const metadata = {
-  title: "Real Time Streaming", // Specify the title for the web page
+  title: "เกมส์คำต้องห้าม", // Specify the title for the web page
   description:
-    "Real-time streaming on AWS enables the seamless and instantaneous delivery of audio, video, or data content to end-users, leveraging AWS services and infrastructure.",
+    "เกมส์คำต้องห้าม online",
 };
 
 export default function RootLayout({ children }) {
