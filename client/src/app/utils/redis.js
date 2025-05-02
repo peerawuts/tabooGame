@@ -123,8 +123,8 @@ export async function getParticipantToken(participantId) {
 
     const member = await repository.search().where('memberKey').eq(participantId).return.returnFirst();
 
-    console.log(member.token);
-    return member.token;
+    console.log(member?.token);
+    return member?.token;
 }
 
 export async function updatePushKey(participantToken, subscription) {

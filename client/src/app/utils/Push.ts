@@ -202,8 +202,6 @@ export async function getParticipantTokenFromRedis(participantId: string): Promi
       return result;
   } catch(err) {
     console.log(err);
-    const result = "";
-    return result;
   }
 }
 

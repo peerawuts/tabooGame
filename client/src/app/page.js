@@ -134,7 +134,9 @@ export default function Home() {
   const handleClickJoinRoom = async () => {
     const token = await getParticipantTokenFromRedis(participantId);
     console.log("token:" + JSON.stringify(token));
-    if(token.length != 0 ){
+    if(token === undefined ){
+        alert("รหัสสมาชิกไม่ถูกต้อง!");
+    }else{
             joinStage(
                       isInitializeComplete,
                       token,
@@ -152,8 +154,6 @@ export default function Home() {
                       socket,
                       participantTokenRef
                     );
-    }else{
-        alert("รหัสสมาชิกไม่ถูกต้อง!");
     }
   };
 
