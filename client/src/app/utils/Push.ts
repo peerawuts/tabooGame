@@ -258,10 +258,10 @@ export async function initPostMessageListener(setTabooWords, handleStartGameCoun
       console.log("Start Game :" + payload.isStartGame);
       const isStartGame = payload.isStartGame == "true" ? true : false;
 
-      const members = new Array();
+      const members : any[] = new Array();
       let data = { members: []  }
       for(let i in payload.playedWords) {
-        const members : string[] = [];
+
         data.members.push( { member: payload.playedWords[i].member });
       }
       console.log(data);
