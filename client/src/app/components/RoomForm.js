@@ -32,12 +32,12 @@ export default function RoomForm() {
   return (
     <form onSubmit={handleSubmit}>
       <label htmlFor="roomName" className="form-label">
-        ชื่อห้อง / Room Name
+        ตั้งชื่อห้องใหม่ / Room Name
       </label>
       <input name="roomName" type="text" className="form-control" />
 
       <label htmlFor="memberName" className="form-label">
-        ชื่อเจ้าของห้อง / Owner Name
+        ตั้งชื่อเจ้าของห้อง / Owner Name
       </label>
       <input name="memberName" type="text" className="form-control" />
 

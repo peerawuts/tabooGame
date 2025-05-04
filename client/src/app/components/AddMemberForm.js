@@ -38,7 +38,7 @@ export default function AddMemberForm() {
       <input name="roomName" type="text" className="form-control" />
 
       <label htmlFor="memberName" className="form-label">
-        ชื่อ สมาชิกห้อง / Member Name
+        ตั้งชื่อ สมาชิกใหม่ / Member Name
       </label>
       <input name="memberName" type="text" className="form-control" />
 
