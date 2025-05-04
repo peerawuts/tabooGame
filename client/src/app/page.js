@@ -20,6 +20,9 @@ import Slider from '@mui/material/Slider';
 import { styled } from '@mui/material/styles';
 import MuiInput from '@mui/material/Input';
 import Typography from '@mui/material/Typography';
+import AppBar from '@mui/material/AppBar';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 
 import {
   getDevices,
@@ -63,25 +66,6 @@ var moment = require('moment');
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-
-const marks = [
-  {
-    value: 1,
-    label: '1 min',
-  },
-  {
-    value: 3,
-    label: '3 mins',
-  },
-  {
-    value: 5,
-    label: '5 mins',
-  },
-  {
-    value: 8,
-    label: '8 mins',
-  },
-];
 
 let socket;
 
@@ -130,6 +114,11 @@ export default function Home() {
   const [isGameEnd, setIsGameEnd] = useState(true);
 
   const [joinRoom, setJoinRoom] = useState(false);
+  const [tab, setTab] = useState('3');
+
+  const handleTabChange = (event, newTab) => {
+    setTab(newTab);
+  };
 
   const handleClickJoinRoom = async () => {
     const token = await getParticipantTokenFromRedis(participantId);
@@ -526,40 +515,66 @@ export default function Home() {
         src="https://web-broadcast.live-video.net/1.6.0/amazon-ivs-web-broadcast.js" // Load the Amazon IVS Web Broadcast JavaScript library
         onLoad={initialize} // Call the 'initialize' function after the script has loaded
       ></Script>
-      <Header />
+      <Box component="section" sx={{ p: 2, border: '3px dashed blue', borderRadius: 5, marginBottom: 2  }}>
+        <Header />
+      </Box>
       <hr />
       <div>
         <Toaster position="bottom-left" reverseOrder={false} />
       </div>
-      <RoomForm />
-      <AddMemberForm />
-      <div className="row">
-        <Select
-          deviceType="Camera"
-          updateDevice={setSelectedVideoDeviceId}
-          devices={videoDevices}
-        />
-        <Select
-          deviceType="Microphone"
-          updateDevice={setSelectedAudioDeviceId}
-          devices={audioDevices}
-        />
-        <Input
-          label="รหัสสมาชิกเข้าห้องของผู้เล่น"
-          value={participantId}
-          onChange={setParticipantId}
-        />
-        {isInitializeComplete && (
-          <div className="button-container row" >
-            <button
-              onClick={handleClickJoinRoom}
-              className="btn btn-primary"
-            >
-              Join Room
-            </button>
-          </div>
+        <Tabs
+          value={tab}
+          onChange={handleTabChange}
+          indicatorColor="none"
+          centered
+        >
+          <Tab label={<Typography variant="h4" color="orange">สร้างห้องใหม่</Typography>} value="1" />
+          <Tab label={<Typography variant="h4" color="green">เพิ่มสมาชิกใหม่ในห้อง</Typography>} value="2" />
+          <Tab label={<Typography variant="h4" color="red">Join Room</Typography>} value="3" />
+        </Tabs>
+       {tab === "1" && (
+          <Box component="section" sx={{ p: 2, border: '3px dashed orange', borderRadius: 5    }}>
+            <RoomForm />
+          </Box>
+       )}
+       {tab === "2" && (
+          <Box component="section" sx={{ p: 2, border: '3px dashed green', borderRadius: 5 }}>
+            <AddMemberForm />
+          </Box>
         )}
-      </div>
+       {tab === "3" && (
+          <Box component="section" sx={{ p: 2, border: '3px dashed red',  borderRadius: 5 }}>
+          <div className="row">
+            <Select
+              deviceType="Camera"
+              updateDevice={setSelectedVideoDeviceId}
+              devices={videoDevices}
+            />
+            <Select
+              deviceType="Microphone"
+              updateDevice={setSelectedAudioDeviceId}
+              devices={audioDevices}
+            />
+            <Input
+              label="รหัสสมาชิกเข้าห้องของผู้เล่น"
+              value={participantId}
+              onChange={setParticipantId}
+            />
+            {isInitializeComplete && (
+              <div className="button-container row" >
+                <button
+                  onClick={handleClickJoinRoom}
+                  className="btn btn-primary"
+                >
+                  Join Room
+                </button>
+              </div>
+            )}
+          </div>
+          </Box>
+
+       )}
+       <div style={{ minHeight: "50px"}}>{}</div>
       <Dialog
         fullScreen
         open={joinRoom}
@@ -649,7 +664,7 @@ export default function Home() {
                         </button>
                      </div>
                  </div>
-              <Box component="section" fontWeight='fontWeightMedium' sx={{ p: 4,  borderRadius: 5, backgroundImage: 'url("/images/warning-striped-rectangular-background-yellow-black-stripes.jpg")', backgroundRepeat: 'no-repeat', backgroundSize: "70% 85px", backgroundPosition: "center center", justifyContent: 'center', textAlign: 'center', color:  (hitWords?.filter(hitWord => hitWord.member == utf8.decode(localParticipant?.participant?.attributes?.username)).length > 0) ? 'error.main' : (isGameEnd ? 'success.main' : 'info.main')  }}>
+              <Box component="section" fontWeight='fontWeightMedium' sx={{ p: 4,  borderRadius: 5, backgroundImage: 'url("/images/warning-striped-rectangular-background-yellow-black-stripes.jpg")', backgroundRepeat: 'no-repeat', backgroundSize: "70% 85px", backgroundPosition: "center center", justifyContent: 'center', textAlign: 'center', color:  (hitWords?.filter(hitWord => hitWord.memberId == utf8.decode(localParticipant?.participant?.id)).length > 0) ? 'error.main' : (isGameEnd ? 'success.main' : 'info.main')  }}>
                       { ( (hitWords?.filter(hitWord => hitWord.memberId == utf8.decode(localParticipant?.participant?.id)).length > 0)
                             || isGameEnd) && (tabooWords.length != 0) ? tabooWords?.filter(
                           tabooWord =>  tabooWord.memberId == utf8.decode(localParticipant?.participant?.id)).map(tabooWord => tabooWord.word) : (tabooWords.length != 0) ? 'Start Playing!' : <img src={"/images/warning_sign.png"} height="50px" width="auto" align="center" />
@@ -683,7 +698,7 @@ export default function Home() {
           )}
       </Dialog>
     </div>
-    <div>
+    <div className="footer">
     <Footer />
     </div>
    </React.Fragment>

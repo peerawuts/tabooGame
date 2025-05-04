@@ -6,16 +6,19 @@ import Link from '@mui/material/Link';
 function Copyright() {
   return (
     <Typography variant="h5" color="text.secondary" align="center">
+      <div>
       {'Copyright © '}
       <Link color="inherit" href="mailto:acquaintedland@gmail.com">
         Acquainted Land
       </Link>{' '}
       {new Date().getFullYear()}
-       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      {'feedback to email '}
+      </div>
+      <div>
+      {'Feedback to email '}
       <Link color="inherit" href="mailto:acquaintedland@gmail.com">
         aquaintedland@gmail.com
       </Link>
+      </div>
     </Typography>
   );
 }

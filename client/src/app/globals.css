@@ -287,3 +287,10 @@ h3 {
    width: 500px;
  }
 
+ .footer {
+   position:fixed;
+   bottom:48px;
+   width:100%;
+   left:0;
+ }
+
